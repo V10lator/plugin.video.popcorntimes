@@ -43,7 +43,3 @@ msgstr ""
 msgctxt "#30006"
 msgid "Genres"
 msgstr ""
-
-msgctxt "#30007"
-msgid "UI Language"
-msgstr ""
