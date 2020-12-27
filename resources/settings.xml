@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting id="Language" type="enum" label="30007"  default="0" values="System default|English|German"/>
+</settings>
