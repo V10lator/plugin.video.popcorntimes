@@ -15,6 +15,17 @@ try:
 except:
 	from urllib.parse import urlencode, parse_qsl
 
+# Plugin Info
+ADDON_ID      = 'plugin.video.popcorntimes'
+REAL_SETTINGS = xbmcaddon.Addon(id=ADDON_ID)
+ADDON_NAME    = REAL_SETTINGS.getAddonInfo('name')
+SETTINGS_LOC  = REAL_SETTINGS.getAddonInfo('profile')
+ADDON_PATH    = REAL_SETTINGS.getAddonInfo('path').decode('utf-8')
+ADDON_VERSION = REAL_SETTINGS.getAddonInfo('version')
+ICON          = REAL_SETTINGS.getAddonInfo('icon')
+FANART        = REAL_SETTINGS.getAddonInfo('fanart')
+LANGUAGE      = REAL_SETTINGS.getLocalizedString
+
 _url = sys.argv[0]
 _handle = int(sys.argv[1])
 
@@ -32,9 +43,9 @@ def getStream(siteUrl):
 		soup = BeautifulSoup(site.text, "html.parser")
 		sorry = soup.find('h3', text='Es tut uns leid...' )
 		if sorry is None:
-			dialog.notification('Fehler', 'Stream konnte nicht ermittelt werden', xbmcgui.NOTIFICATION_ERROR, 5000)	
+			dialog.notification(LANGUAGE(30000), LANGUAGE(30001), xbmcgui.NOTIFICATION_ERROR, 5000)	
 		else:
-			dialog.notification('Nicht verfuegbar', "Film nicht mehr verfuegbar", xbmcgui.NOTIFICATION_WARNING, 5000)
+			dialog.notification(LANGUAGE(30002), LANGUAGE(30003), xbmcgui.NOTIFICATION_WARNING, 5000)
 
 	else:
 		encoded = match[0]
@@ -43,9 +54,9 @@ def getStream(siteUrl):
 
 
 def root():
-	addDirectoryItem(_handle, get_url(action='listing', url="/de/top-filme"), ListItem("Top Filme"), True)	
-	addDirectoryItem(_handle, get_url(action='listing', url="/de/neu"), ListItem("Neu im Programm"), True)
-	addDirectoryItem(_handle, get_url(action='genre'), ListItem("Genres"), True)	
+	addDirectoryItem(_handle, get_url(action='listing', url="/de/top-filme"), ListItem(LANGUAGE(30004)), True)	
+	addDirectoryItem(_handle, get_url(action='listing', url="/de/neu"), ListItem(LANGUAGE(30005)), True)
+	addDirectoryItem(_handle, get_url(action='genre'), ListItem(LANGUAGE(30006)), True)
 	endOfDirectory(_handle)
 
 

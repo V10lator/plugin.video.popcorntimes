@@ -9,9 +9,15 @@
   <provides>video</provides>
 </extension>
 <extension point="xbmc.addon.metadata">
-  <summary lang="de">Video plugin für popcorntimes.tv</summary>
+  <summary lang="en_GB">Video plugin for popcorntimes.tv</summary>
+  <description lang="en_GB">Video plugin for popcorntimes.tv</description>
+  <disclaimer lang="en_GB">Video plugin for popcorntimes.tv</disclaimer>
+  <summary lang="de_DE">Video plugin für popcorntimes.tv</summary>
   <description lang="de_DE">Video plugin für popcorntimes.tv</description>
   <disclaimer lang="de_DE">Video plugin für popcorntimes.tv</disclaimer>
+  <license>GNU GENERAL PUBLIC LICENSE. Version 2</license>
+  <source>https://github.com/V10lator/plugin.video.popcorntimes</source>
+  <website>https://popcorntimes.tv/</website>
   <assets>
     <icon>icon.png</icon>
   </assets>
