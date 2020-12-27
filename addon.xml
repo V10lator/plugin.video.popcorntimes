@@ -20,7 +20,7 @@
   <website>https://popcorntimes.tv/</website>
   <assets>
     <icon>resources/img/icon.png</icon>
-    <fanart>resources/img/fanart.png</icon>
+    <fanart>resources/img/fanart.jpg</fanart>
   </assets>
 </extension>
 </addon>
