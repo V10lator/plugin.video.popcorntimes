@@ -12,14 +12,14 @@ from xbmcplugin import addDirectoryItem, endOfDirectory
 try:
 	from urllib import urlencode
 	from urlparse import parse_qsl
-except: 
+except:
 	from urllib.parse import urlencode, parse_qsl
-	
+
 _url = sys.argv[0]
 _handle = int(sys.argv[1])
 
 s = requests.Session()
-base_url = "https://popcorntimes.tv" 
+base_url = "https://popcorntimes.tv"
 
 def decode(enc):
 	return base64.b64decode(codecs.decode(enc, 'rot13'))
@@ -30,16 +30,16 @@ def getStream(siteUrl):
 	if len(match) < 1:
 		dialog = xbmcgui.Dialog()
 		soup = BeautifulSoup(site.text, "html.parser")
-		sorry = soup.find('h3', text='Es tut uns leid...' )		
+		sorry = soup.find('h3', text='Es tut uns leid...' )
 		if sorry is None:
-			dialog.notification('Fehler', 'Stream konnte nicht ermittelt werden', xbmcgui.NOTIFICATION_ERROR, 5000)		
+			dialog.notification('Fehler', 'Stream konnte nicht ermittelt werden', xbmcgui.NOTIFICATION_ERROR, 5000)	
 		else:
 			dialog.notification('Nicht verfuegbar', "Film nicht mehr verfuegbar", xbmcgui.NOTIFICATION_WARNING, 5000)
-			
+
 	else:
 		encoded = match[0]
 		xbmc.log("encoded:" + encoded, level=xbmc.LOGINFO)
-		return "https:" + decode(encoded).decode("utf-8") 
+		return "https:" + decode(encoded).decode("utf-8")
 
 
 def root():
@@ -56,9 +56,9 @@ def list_genre():
 	for h3 in genres_h3:
 		link = h3.find("a");
 		addDirectoryItem(_handle, get_url(action='listing', url=link.get("href")), ListItem(link.text), True)
-		
+
 	endOfDirectory(_handle)
-	
+
 
 def list_movies(url):
 	xbmcplugin.setContent(_handle, 'Movies')
@@ -69,14 +69,14 @@ def list_movies(url):
 		if div.find("a") is not None:
 			title = div.find("a").find("img").get("alt")
 			liz = xbmcgui.ListItem( title)
-			year = ""			
+			year = ""
 			plot = ""
-			if div.find("p", class_ = "pt-tile-desc") is not None:			
+			if div.find("p", class_ = "pt-tile-desc") is not None:
 				plot = div.find("p", class_ = "pt-tile-desc").text
-			if div.find("p", attrs={'class': None}) is not None:			
+			if div.find("p", attrs={'class': None}) is not None:
 				plot = div.find("p", attrs={'class': None}).text
-			
-			if div.find("p", class_ = "pt-video-time") is not None:			
+
+			if div.find("p", class_ = "pt-video-time") is not None:
 				year = div.find("p", class_ = "pt-video-time").text.split('|',1)[0].strip()
 			try:
 				year = int(year)
@@ -104,7 +104,7 @@ def play(movie_url):
 		xbmcplugin.setResolvedUrl(_handle, True, liz)
 	#else:
 		#xbmcplugin.setResolvedUrl(_handle, False, liz)
-	
+
 def get_url(**kwargs):
 	"""
 	Create a URL for calling the plugin recursively from the given set of keyword arguments.
