@@ -38,7 +38,7 @@ def getStream(siteUrl):
 			
 	else:
 		encoded = match[0]
-		xbmc.log("encoded:" + encoded, level=xbmc.LOGNOTICE)
+		xbmc.log("encoded:" + encoded, level=xbmc.LOGINFO)
 		return "https:" + decode(encoded).decode("utf-8") 
 
 
