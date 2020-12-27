@@ -19,7 +19,7 @@
   <source>https://github.com/V10lator/plugin.video.popcorntimes</source>
   <website>https://popcorntimes.tv/</website>
   <assets>
-    <icon>icon.png</icon>
+    <icon>resources/img/icon.png</icon>
   </assets>
 </extension>
 </addon>
