@@ -61,7 +61,7 @@ def root():
 
 
 def list_genre():
-	req = s.get("https://popcorntimes.tv/de/genres")
+	req = s.get(base_url + "/de/genres")
 	soup = BeautifulSoup(req.text, "html.parser")
 	genres_h3 = soup.find("div", class_ = "pt-bordered-tiles").find_all("h3")
 	for h3 in genres_h3:
