@@ -82,7 +82,7 @@ def list_genre():
 		if img is None:
 			img = ICON
 		else:
-			img = "https://" + img
+			img = "https:" + img
 
 		listItem.setArt({'thumb':ICON,'fanart':FANART,'poster':img})
 		addDirectoryItem(_handle, get_url(action='listing', url=link.get("href")), listItem, True)
