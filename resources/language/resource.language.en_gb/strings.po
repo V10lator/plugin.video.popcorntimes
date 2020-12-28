@@ -1,5 +1,5 @@
 # Kodi Media Center language file
-# Addon Name: "Popcorntimes.tv"
+# Addon Name: Popcorntimes.tv
 # Addon id: plugin.video.popcorntimes
 # Addon Provider: V10lator
 msgid ""
