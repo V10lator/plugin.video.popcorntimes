@@ -54,21 +54,40 @@ def getStream(siteUrl):
 
 
 def root():
-	addDirectoryItem(_handle, get_url(action='listing', url="/de/top-filme"), ListItem(LANGUAGE(30004)), True)	
-	addDirectoryItem(_handle, get_url(action='listing', url="/de/neu"), ListItem(LANGUAGE(30005)), True)
-	addDirectoryItem(_handle, get_url(action='genre'), ListItem(LANGUAGE(30006)), True)
+	listItem = ListItem(LANGUAGE(30004))
+	listItem.setProperty('IsPlayable', 'false')
+	listItem.setArt({'thumb':ICON,'fanart':FANART})
+	addDirectoryItem(_handle, get_url(action='listing', url="/de/top-filme"), listItem, True)
+	listItem = ListItem(LANGUAGE(30005))
+	listItem.setProperty('IsPlayable', 'false')
+	listItem.setArt({'thumb':ICON,'fanart':FANART})
+	addDirectoryItem(_handle, get_url(action='listing', url="/de/neu"), listItem, True)
+	listItem = ListItem(LANGUAGE(30006))
+	listItem.setProperty('IsPlayable', 'false')
+	listItem.setArt({'thumb':ICON,'fanart':FANART})
+	addDirectoryItem(_handle, get_url(action='genre'), listItem, True)
 	endOfDirectory(_handle)
 
 
 def list_genre():
 	req = s.get(base_url + "/de/genres")
 	soup = BeautifulSoup(req.text, "html.parser")
-	genres_h3 = soup.find("div", class_ = "pt-bordered-tiles").find_all("h3")
+	genres_h3 = soup.find("div", class_ = "pt-bordered-tiles").find_all("div", class_ = "pt-movie-tile")
 	for h3 in genres_h3:
-		link = h3.find("a");
-		addDirectoryItem(_handle, get_url(action='listing', url=link.get("href")), ListItem(link.text), True)
+		link = h3.find("a")
+		img = h3.find("img")
+		listItem = ListItem(img['alt'])
+		listItem.setProperty('IsPlayable', 'false')
+		img = img['data-src']
+		if img is None:
+			img = FANART
+		else:
+			img = "https://" + img
 
-	endOfDirectory(_handle)
+                listItem.setArt({'thumb':ICON,'fanart':img})
+                addDirectoryItem(_handle, get_url(action='listing', url=link.get("href")), listItem, True)
+
+        endOfDirectory(_handle)
 
 
 def list_movies(url):
@@ -78,32 +97,40 @@ def list_movies(url):
 	mov_divs = soup.find_all("div", class_ = "pt-movie-tile-full")
 	for div in mov_divs:
 		if div.find("a") is not None:
-			title = div.find("a").find("img").get("alt")
-			liz = xbmcgui.ListItem( title)
-			year = ""
-			plot = ""
+			img = div.find("a").find("img")
+			title = img["alt"]
+
 			if div.find("p", class_ = "pt-tile-desc") is not None:
 				plot = div.find("p", class_ = "pt-tile-desc").text
 			if div.find("p", attrs={'class': None}) is not None:
 				plot = div.find("p", attrs={'class': None}).text
 
-			if div.find("p", class_ = "pt-video-time") is not None:
-				year = div.find("p", class_ = "pt-video-time").text.split('|',1)[0].strip()
+			pt_time = div.find("p", class_ = "pt-video-time")
+			if pt_time is not None:
+				year = pt_time.text.split('|',1)[0].strip()
+				duration = pt_time.find("span").text.split(' ',1)[0].strip()
 			try:
 				year = int(year)
 			except:
 				year = None
+			try:
+				duration = int(duration) * 60
+			except:
+				duration = None
 			img = div.find("a").find("img").get("data-src")
 			if img is None:
 				img = div.find("a").find("img").get("src")
-			liz.setArt({ 'poster': "https:" + img }),
-			liz.setProperty('IsPlayable', 'true')
-			liz.setInfo('video', {'Title': title, 'Plot': plot, 'Year': year })
-			mov_url = base_url + div.find("a").get("href")
-			addDirectoryItem(_handle, get_url(action='play', url=mov_url), liz, False)
 
-	endOfDirectory(_handle)
-	xbmcplugin.setContent(_handle, 'Movies')
+			listItem = ListItem(title)
+			listItem.setProperty('IsPlayable', 'true')
+			listItem.setArt({ 'poster': "https:" + img }),
+			listItem.setInfo('video', {'title': title, 'plot': plot, 'year': year, 'duration': duration })
+			mov_url = base_url + div.find("a").get("href")
+			addDirectoryItem(_handle, get_url(action='play', url=mov_url), listItem, False)
+
+        endOfDirectory(_handle)
+        xbmcplugin.setContent(_handle, 'Movies')
+
 
 def play(movie_url):
 	title = movie_url
