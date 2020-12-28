@@ -50,9 +50,6 @@ _handle = int(sys.argv[1])
 s = requests.Session()
 base_url = "https://popcorntimes.tv"
 
-def decode(enc):
-	return base64.b64decode(codecs.decode(enc, 'rot13'))
-
 def getStream(siteUrl):
 	site = s.get(siteUrl)
 	match = re.findall(r"PCTMLOC = \"(.*)\"", site.text)
@@ -68,7 +65,7 @@ def getStream(siteUrl):
 	else:
 		encoded = match[0]
 		xbmc.log("encoded:" + encoded, level=xbmc.LOGINFO)
-		return "https:" + decode(encoded).decode("utf-8")
+		return "https:" + base64.b64decode(codecs.decode(encoded, 'rot13')).decode("utf-8")
 
 
 def root():
