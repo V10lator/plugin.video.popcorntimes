@@ -80,11 +80,11 @@ def list_genre():
 		listItem.setProperty('IsPlayable', 'false')
 		img = img['data-src']
 		if img is None:
-			img = FANART
+			img = ICON
 		else:
 			img = "https://" + img
 
-		listItem.setArt({'thumb':ICON,'fanart':img})
+		listItem.setArt({'thumb':ICON,'fanart':FANART,'poster':img})
 		addDirectoryItem(_handle, get_url(action='listing', url=link.get("href")), listItem, True)
 
 	endOfDirectory(_handle)
@@ -123,7 +123,7 @@ def list_movies(url):
 
 			listItem = ListItem(title)
 			listItem.setProperty('IsPlayable', 'true')
-			listItem.setArt({ 'poster': "https:" + img }),
+			listItem.setArt({ 'fanart':FANART,'poster': "https:" + img }),
 			listItem.setInfo('video', {'title': title, 'plot': plot, 'year': year, 'duration': duration })
 			mov_url = base_url + div.find("a").get("href")
 			addDirectoryItem(_handle, get_url(action='play', url=mov_url), listItem, False)
