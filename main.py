@@ -84,10 +84,10 @@ def list_genre():
 		else:
 			img = "https://" + img
 
-                listItem.setArt({'thumb':ICON,'fanart':img})
-                addDirectoryItem(_handle, get_url(action='listing', url=link.get("href")), listItem, True)
+		listItem.setArt({'thumb':ICON,'fanart':img})
+		addDirectoryItem(_handle, get_url(action='listing', url=link.get("href")), listItem, True)
 
-        endOfDirectory(_handle)
+	endOfDirectory(_handle)
 
 
 def list_movies(url):
