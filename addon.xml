@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.video.popcorntimes" version="1.0.6" name="Popcorntimes.tv" provider-name="V10lator">
+<addon id="plugin.video.popcorntimes" version="1.9999" name="Popcorntimes.tv" provider-name="V10lator">
 <requires>
 <import addon="xbmc.python" version="3.0.0"/>
 <import addon="script.module.requests" version="2.12.4"/>
