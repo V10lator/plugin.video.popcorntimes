@@ -128,8 +128,8 @@ def list_movies(url):
 			mov_url = base_url + div.find("a").get("href")
 			addDirectoryItem(_handle, get_url(action='play', url=mov_url), listItem, False)
 
-        endOfDirectory(_handle)
-        xbmcplugin.setContent(_handle, 'Movies')
+	endOfDirectory(_handle)
+	xbmcplugin.setContent(_handle, 'Movies')
 
 
 def play(movie_url):
