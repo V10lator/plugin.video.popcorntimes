@@ -158,6 +158,7 @@ def play(movie_url):
 	#else:
 		#xbmcplugin.setResolvedUrl(_handle, False, liz)
 
+
 def get_url(**kwargs):
 	"""
 	Create a URL for calling the plugin recursively from the given set of keyword arguments.
@@ -169,9 +170,10 @@ def get_url(**kwargs):
 	return '{0}?{1}'.format(_url, urlencode(kwargs))
 
 
-def router(paramstring):
+if __name__ == '__main__':
 	# Parse a URL-encoded paramstring to the dictionary of
 	# {<parameter>: <value>} elements
+	paramstring = sys.argv[2][1:]
 	params = dict(parse_qsl(paramstring))
 	# Check the parameters passed to the plugin
 	if params:
@@ -187,6 +189,3 @@ def router(paramstring):
 			raise ValueError('Invalid paramstring: {0}!'.format(paramstring))
 	else:
 		root()
-
-if __name__ == '__main__':
-	router(sys.argv[2][1:])
